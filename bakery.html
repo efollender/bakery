@@ -1,0 +1,127 @@
+<html>
+<head>
+  <title>Bakery Bonanza</title>
+  <style type="text/css">
+  #bakery .display div { width: 200px; height: 200px; float: left; }
+  #bakery .display .cupcake { background: url("images/cupcake.png"); }
+  #bakery .display .cookie { background: url("http://i.imgur.com/Yxq78qn.jpg"); }
+  </style>
+  <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/foundation/5.2.3/css/foundation.min.css">
+</head>
+<body>
+
+<header>
+  <nav class="top-bar" data-topbar>
+    <ul class="title-area">
+      <li class="name">
+        <h1><a href="#">Bakery</a></h1>
+      </li>
+      <li class="toggle-topbar menu-icon">
+        <a href="#"><span>Menu</span></a>
+      </li>
+    </ul>
+    <section class="top-bar-section">
+      <ul class="right">
+        <li class="active"><a href="#">Home</a></li>
+        <li><a href="#">Bake something</a></li>
+        <li><a href="#">Buy ingredients</a></li>
+        <li><a href="#">View display case</a></li>
+      </ul>
+    </section>
+  </nav>
+</header>
+<div class="row">
+  <br/>
+  <div id="bakery" class="large-12 columns">
+    <div class="large-6 columns">
+      <h4>Available Ingredients:</h4>
+      <ul class="inline-list ingredients">
+        <li class="flour">Flour: <span></span></li>
+        <li class="eggs">Eggs: <span></span></li>
+        <li class="sugar">Sugar: <span></span></li>
+        <li class="spice">Spice: <span></span></li>
+      </ul>
+      <button class="make large-6 columns" data-good-type="cupcake">Make Cupcake</button>
+      <button class="make large-6 columns" data-good-type="cookie">Make Cookie</button>
+    </div>
+    <div class="large-6 columns">
+      <h3>Food Display Case</h3>
+      <div class="display"></div>
+    </div>
+  </div>
+</div>
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script type="text/javascript">
+
+var bakery = {
+  supplies: {
+    flour: 4,
+    eggs: 12,
+    sugar: 17,
+    spice: 5
+  },
+  goodRequirements: {
+    cupcake: {
+      flour: 2,
+      eggs: 1,
+      sugar: 1
+    },
+    cookie: {
+      flour: 1,
+      eggs: 2,
+      sugar: 1,
+      spice: 2
+    }
+  },
+  ingredientCheck: function(recs) {
+    console.log('Checking ingredient availability...')
+    success_count = 0;
+    $.each(recs, function(k, v){
+      if(v <= bakery.supplies[k]){
+        success_count += 1;
+        bakery.supplies[k] -= v;
+      };
+    });
+    if(Object.keys(recs).length === success_count){
+      return true;
+    } else {
+      return false;
+    }
+  },
+  make: function (goodType) {
+    console.log('Attempting to make a:', goodType);
+    var req = this.goodRequirements[goodType];
+    // TODO: Only make if we have enough ingredients
+    ingredients_available = bakery.ingredientCheck(req);
+    if (ingredients_available) {
+      // TODO: Reduce the bakery's supplies by the required amount
+      this.updateIngredientsList();
+      console.log('The bakery made a ' + goodType + '!');
+
+      // TODO: Add class goodType class to div
+      var goodDiv = $('<div class='+goodType+'>');
+      $('#bakery .display').append(goodDiv);
+    } else {
+      console.log("You can't make that.")
+    }
+  },
+  updateIngredientsList: function () {
+    // TODO: Update rest of ingredients
+    $.each(this.supplies, function(k, v){
+      $('.ingredients .'+k+' span').text(v);
+    });
+  }
+};
+
+$('#bakery .make').on('click', function (e) {
+  var goodType = $(e.currentTarget).data('good-type');
+  // TODO: Make the good
+  bakery.make(goodType);
+});
+
+bakery.updateIngredientsList();
+
+</script>
+</body>
+</html>
