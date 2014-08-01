@@ -76,18 +76,15 @@ var bakery = {
   },
   ingredientCheck: function(recs) {
     console.log('Checking ingredient availability...')
-    success_count = 0;
+    success = true;
     $.each(recs, function(k, v){
-      if(v <= bakery.supplies[k]){
-        success_count += 1;
+      if((v <= bakery.supplies[k]) && success){
         bakery.supplies[k] -= v;
-      };
+      } else {
+        success = false;
+      }
     });
-    if(Object.keys(recs).length === success_count){
-      return true;
-    } else {
-      return false;
-    }
+    return success;
   },
   make: function (goodType) {
     console.log('Attempting to make a:', goodType);
