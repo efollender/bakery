@@ -37,12 +37,35 @@
         <li class="sugar">Sugar: <span></span></li>
         <li class="spice">Spice: <span></span></li>
       </ul>
-      <button class="make large-6 columns" data-good-type="cupcake">Make Cupcake</button>
-      <button class="make large-6 columns" data-good-type="cookie">Make Cookie</button>
+      <h4>Current Balance: $<span id="money"></span></h4>
+      <button class="make large-5 columns" data-good-type="cupcake">Make Cupcake</button>
+      <button class="make large-5 columns" data-good-type="cookie">Make Cookie</button>
     </div>
     <div class="large-6 columns">
       <h3>Food Display Case</h3>
       <div class="display"></div>
+    </div>
+    <div class="large-12 columns" id="supplies">
+      <h3>Buy Supplies</h3>
+      <form>
+        <div class="large-6 columns">
+          <label for="name">Flour
+            <input name="flour" type="text" placeholder="0" />
+          </label>
+          <label for="name">Spice
+            <input name="spice" type="text" placeholder="0"/>
+          </label>
+        </div>
+        <div class="large-6 columns">
+          <label for="name">Sugar
+            <input name="sugar" type="text" placeholder="0"/>
+          </label>
+          <label for="name">Eggs
+            <input name="eggs" type="text" placeholder="0"/>
+          </label>
+        </div>
+        <button type="submit" value="Purchase" name="submit">Purchase</button>
+      </form>
     </div>
   </div>
 </div>
